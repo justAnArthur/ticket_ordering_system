@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>{{#add}}Create new Airport:{{/add}} {{^add}}Edit Airport:{{/add}}</h1>
+
+{{#airport}}
+    <form action="/admin{{#add}}/airport/add{{/add}}{{^add}}/airport/{{id}}/edit{{/add}}" name="airport" method="POST">
+        <table border="0">
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td><input type="text" name="name" value="{{#name}}{{name}}{{/name}}"/></td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>:</td>
+                <td><input type="text" name="code" value="{{#code}}{{code}}{{/code}}"/></td>
+            </tr>
+            {{#address}}
+                <tr>
+                    <td>City</td>
+                    <td>
+                        <input type="text" name="city" value="{{city}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>
+                        <input type="text" name="country" value="{{country}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>
+                        <input type="text" name="state" value="{{state}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Street</td>
+                    <td>
+                        <input type="text" name="street" value="{{street}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ZipCode</td>
+                    <td>
+                        <input type="text" name="zipCode" value="{{zipCode}}"/>
+                    </td>
+                </tr>
+
+            {{/address }}
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
+    </form>
+{{/airport}}
+
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

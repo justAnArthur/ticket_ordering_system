@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>oop_ticket_ordering_system</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>Selected itinerary</h1>
+
+<script>
+    let indexes = {};
+
+    function addInput(id) {
+        if (indexes[id] == null)
+            indexes[id] = 0;
+
+        const container = document.getElementById('inputs-container-' + id);
+        const newInput = document.createElement('div');
+        newInput.className = 'input-group';
+        newInput.innerHTML = `<div>
+                <label>
+                    Name
+                    <input type="text" name="reservation[${id}][${indexes[id]}].name" required/>
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="reservation[${id}][${indexes[id]}].email" required/>
+                </label>
+                <label>
+                    Phone
+                    <input type="tel" name="reservation[${id}][${indexes[id]}].phone" required/>
+                </label>
+            </div>
+            <div>
+        </div>`;
+        container.appendChild(newInput);
+
+        indexes[id]++;
+    }
+</script>
+
+<form action="/user/reserve" name="reserveItinerary" method="POST">
+    <ul style="display: grid; gap: 3rem">
+        {{#instances}}
+            <li>
+                {{#flight}}
+                    {{departure}} : {{departureDateTime}}
+                    ⬇️
+                    {{arrival}} : {{arrivalDateTime}}
+                {{/flight}}
+                <div id="inputs-container-{{id}}">
+                </div>
+                <button type="button" onclick="addInput({{id}})">Add passenger</button>
+            </li>
+        {{/instances}}
+    </ul>
+    <button type="submit">Reserve</button>
+</form>
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

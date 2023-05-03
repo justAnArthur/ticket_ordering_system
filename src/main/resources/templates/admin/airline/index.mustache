@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="space-y-9 divide-y">
+
+<h1>Airlines list</h1>
+
+<a href="/admin/airline/add">Add new</a>
+
+<ul>
+    {{#airlines}}
+        <li>
+            <h3>{{code}}</h3>
+            <h2>{{name}}</h2>
+            <a href="/admin/airline/{{id}}/edit">Edit</a>
+            <a href="/admin/airline/{{id}}/details">Details</a>
+        </li>
+    {{/airlines}}
+</ul>
+
+</body>
+</html>

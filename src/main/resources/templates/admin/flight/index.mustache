@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="space-y-9 divide-y">
+
+<h1>Flights list</h1>
+
+<a href="/admin/flight/add">Add new</a>
+
+<ul>
+    {{#flights}}
+        <li style="display: grid; gap: 0.5rem">
+            <h3>{{flightNumber}}</h3>
+            <div style="display: inline-flex; align-items: center; gap: 3rem">
+                <div>
+                    <h2>{{#departure}}{{name}}{{/departure}}</h2>
+                    <h4>{{#schedule}}{{departureTime}}{{/schedule}}</h4>
+                </div>
+
+                <span>-></span>
+
+                <div>
+                    <h2>{{#arrival}}{{name}}{{/arrival}}</h2>
+                    <h4>{{#schedule}}{{#arrivalTime}}{{arrivalTime}}{{/arrivalTime}}{{/schedule}}</h4>
+                </div>
+            </div>
+            <a href="/admin/flight/{{id}}/edit">Edit</a>
+            <a href="/admin/flight/{{id}}/details">Details</a>
+        </li>
+    {{/flights}}
+</ul>
+
+</body>
+</html>

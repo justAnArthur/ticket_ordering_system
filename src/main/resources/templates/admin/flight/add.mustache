@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/flight/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>{{#add}}Create new Flight:{{/add}} {{^add}}Edit Flight:{{/add}}</h1>
+
+{{#flight}}
+    <form action="/admin{{#add}}/flight/add{{/add}}{{^add}}/flight/{{id}}/edit{{/add}}" name="flight" method="POST">
+        <table>
+            <tr>
+                <td>flightNumber</td>
+                <td>:</td>
+                <td><input type="text" name="flightNumber" value="{{#flightNumber}}{{flightNumber}}{{/flightNumber}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Departure</td>
+                <td>:</td>
+                <td>
+                    <select name="departure">
+                        {{#airports}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/airports}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Arrival</td>
+                <td>:</td>
+                <td>
+                    <select name="arrival">
+                        {{#airports}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/airports}}
+                    </select>
+                </td>
+            </tr
+            {{#schedule}}
+                <tr>
+                    <td>Day of week</td>
+                    <td>:</td>
+                    <td>
+                        <select name="schedule.dayOfWeek">
+                            {{#availableDaysOfWeek}}
+                                <option  value="{{.}}">{{.}}</option>
+                            {{/availableDaysOfWeek}}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Departure time</td>
+                    <td>:</td>
+                    <td><input type="time" name="schedule.departureTime"
+                               value="{{#departureTime}}{{departureTime}}{{/departureTime}}"/></td>
+                </tr>
+                <tr>
+                    <td>Arrival time</td>
+                    <td>:</td>
+                    <td><input type="time" name="schedule.arrivalTime"
+                               value="{{#arrivalTime}}{{arrivalTime}}{{/arrivalTime}}"/></td>
+                </tr>
+            {{/schedule}}>
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
+    </form>
+{{/flight}}
+
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

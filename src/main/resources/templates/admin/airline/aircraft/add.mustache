@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>{{#add}}Create new Aircraft:{{/add}} {{^add}}Edit Aircraft:{{/add}}</h1>
+
+{{#aircraft}}
+    <form action="/admin{{#add}}/airline/{{airlineId}}/aircraft/{{id}}/add{{/add}}{{^add}}/airline/{{airlineId}}/aircraft/{{id}}/edit{{/add}}" name="airport" method="POST">
+        <table border="0">
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td><input type="text" name="name" value="{{#name}}{{name}}{{/name}}"/></td>
+            </tr>
+            <tr>
+                <td>Modal</td>
+                <td>:</td>
+                <td><input type="text" name="modal" value="{{#modal}}{{modal}}{{/modal}}"/></td>
+            </tr>
+            <tr>
+                <td>Manufacturing year</td>
+                <td>:</td>
+                <td><input type="text" name="manufacturingYear" value="{{#manufacturingYear}}{{manufacturingYear}}{{/manufacturingYear}}"/></td>
+            </tr>
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
+    </form>
+{{/aircraft }}
+
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

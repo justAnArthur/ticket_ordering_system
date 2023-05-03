@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="space-y-9 divide-y">
+
+<h1>Aircraft list of {{#airline}}{{name}}{{/airline}}</h1>
+
+<a href="/admin/airline/{{#airline}}{{id}}{{/airline}}/aircraft/add">Add new</a>
+
+<ul>
+    {{#aircrafts}}
+        <li>
+            <h3>{{modal}}</h3>
+            <h2>{{name}}</h2>
+<!--            <a href="/admin/airline/{{id}}/edit">Edit</a>-->
+        </li>
+    {{/aircrafts}}
+</ul>
+
+</body>
+</html>

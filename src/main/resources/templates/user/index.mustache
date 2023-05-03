@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>oop_ticket_ordering_system</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>Find your flight</h1>
+
+{{#request}}
+    <form action="/user" name="request" method="POST">
+        <table>
+            <tr>
+                <td>Departure</td>
+                <td>:</td>
+                <td>
+                    <select name="airportFrom">
+                        {{#availableAirports}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/availableAirports}}
+                    </select>
+                </td>
+                <td>
+                    <input type="date" name="dateFrom" value="{{#dateFrom}}{{dateFrom}}{{/dateFrom}}" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>Arrival</td>
+                <td>:</td>
+                <td>
+                    <select name="airportTo">
+                        {{#availableAirports}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/availableAirports}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">
+            Find
+        </button>
+    </form>
+{{/request}}
+
+{{#response}}
+    <ul>
+        {{#routes}}
+            <li>
+                {{#route}}
+                    <span>
+                        {{#flight}}
+                            {{departure}} : {{departureDateTime}}
+                            ⬇️
+                            {{arrival}} : {{arrivalDateTime}}
+                        {{/flight}}
+                    </span>
+                    🛬
+                {{/route}}
+            </li>
+            <a href="/user/reserve?ids={{ids}}">
+                Reserve
+            </a>
+            --------------------
+        {{/routes}}
+    </ul>
+{{/response}}
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

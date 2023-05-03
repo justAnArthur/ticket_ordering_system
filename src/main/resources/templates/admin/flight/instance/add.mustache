@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/flight/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>{{#add}}Create new Flight Instance:{{/add}} {{^add}}Edit Flight:{{/add}}</h1>
+
+{{#instance}}
+    <form action="/admin/flight/{{#flightId}}{{flightId}}{{/flightId}}{{#add}}/add{{/add}}{{^add}}/edit{{/add}}"
+          name="flightInstance"
+          method="POST">
+        <table border="0">
+            <tr>
+                <td>Arrival</td>
+                <td>:</td>
+                <td>
+                    <select name="date">
+                        {{#availableDates}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{/availableDates}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>:</td>
+                <td>
+                    <select name="status">
+                        {{#availableStatuses}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{/availableStatuses}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Aircraft</td>
+                <td>:</td>
+                <td>
+                    <select name="aircraft">
+                        {{#availableAircrafts}}
+                            <option value="{{id}}">{{name}} - {{modal}}</option>
+                        {{/availableAircrafts}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
+    </form>
+{{/instance}}
+
+
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+</body>
+</html>

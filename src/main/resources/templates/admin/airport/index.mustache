@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>admin/airport/index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="space-y-9 divide-y">
+
+<h1>Airports list</h1>
+
+<a href="/admin/airport/add">Add new</a>
+
+<ul>
+    {{#airports}}
+        <li>
+            <h2>{{name}}</h2>
+            <a href="/admin/airport/{{id}}/edit">Edit</a>
+            <form action="/admin/airport/{{id}}/delete" method="POST">
+                Delete this ? <input type="submit" value="Yes"/>
+            </form>
+        </li>
+    {{/airports}}
+</ul>
+
+</body>
+</html>
