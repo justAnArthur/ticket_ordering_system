@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "notification")
 public class Notification {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private NotificationType type;

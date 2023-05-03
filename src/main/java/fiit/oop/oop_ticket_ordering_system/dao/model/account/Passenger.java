@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "passenger")
+@DiscriminatorValue("passenger")
 public class Passenger extends Person {
 }
 

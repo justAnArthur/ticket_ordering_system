@@ -1,2 +1,60 @@
-{{#result}}{{result}}{{/result}}
-{{#errorMessage}}{{errorMessage}}{{/errorMessage}}
+{{> header}}
+
+<main class="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:pb-24 lg:px-8">
+    {{#result}}
+        <div class="mx-auto mt-20 max-w-2xl text-center sm:mt-24">
+            <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Thank you for you reservation
+            </h1>
+            <p class="mt-4 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
+                Check your mail by get a order summaries.
+            </p>
+        </div>
+        <div class="mx-auto mt-16 flow-root max-w-lg sm:mt-20">
+            <ul role="list" class="-mt-6">
+                <li class="relative flex gap-x-6 py-6">
+                    <div class="flex h-16 w-16 flex-none items-center justify-center rounded-lg shadow-sm ring-1 ring-gray-900/10">
+                        <svg class="h-9 w-9 text-indigo-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="flex-auto">
+                        <h3 class="text-sm font-semibold leading-6 text-gray-900">
+                            <a href="https://github.com/justAnArthur">
+                                <span class="absolute inset-0" aria-hidden="true"></span>
+                                Github
+                            </a>
+                        </h3>
+                        <p class="mt-2 text-sm leading-6 text-gray-600">
+                            Subscribe to see more interest projects.
+                        </p>
+                    </div>
+                    <div class="flex-none self-center">
+                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {{/result}}
+
+    {{^result}}
+        <div class="mx-auto mt-20 max-w-2xl text-center sm:mt-24">
+            <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                There is an error while creating your reservation
+            </h1>
+            {{#errorMessage}}
+                <p class="mt-4 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
+                    {{errorMessage}}
+                </p>
+            {{/errorMessage}}
+        </div>
+    {{/result}}
+</main>
+
+{{> footer}}

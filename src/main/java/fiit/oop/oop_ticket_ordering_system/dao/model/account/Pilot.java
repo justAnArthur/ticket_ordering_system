@@ -11,5 +11,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "pilot")
+@DiscriminatorValue("pilot")
 public class Pilot extends Person {
 }

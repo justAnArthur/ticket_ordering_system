@@ -7,14 +7,9 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 @Data
-
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends Person {
     private String frequentFlyerNumber;
-
-    List<Itinerary> getItineraries() {
-        return null;
-    }
 }
 
 

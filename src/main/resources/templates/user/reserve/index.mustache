@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>oop_ticket_ordering_system</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-
-<h1>Selected itinerary</h1>
+{{> header}}
 
 <script>
     let indexes = {};
@@ -19,47 +10,107 @@
         const container = document.getElementById('inputs-container-' + id);
         const newInput = document.createElement('div');
         newInput.className = 'input-group';
-        newInput.innerHTML = `<div>
-                <label>
+        newInput.innerHTML = `<div class="space-y-2">
+                <h4 class="text-base font-semibold text-gray-800">
+                    Passenger ${indexes[id] + 1}
+                </h4>
+                <label class="block text-sm font-semibold leading-6 text-gray-900">
                     Name
-                    <input type="text" name="reservation[${id}][${indexes[id]}].name" required/>
+                    <input type="text" name="reservation[${id}][${indexes[id]}].name" required class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </label>
-                <label>
+                <label class="block text-sm font-semibold leading-6 text-gray-900">
                     Email
-                    <input type="email" name="reservation[${id}][${indexes[id]}].email" required/>
+                    <input type="email" name="reservation[${id}][${indexes[id]}].email" required class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                 </label>
-                <label>
+                <label class="block text-sm font-semibold leading-6 text-gray-900">
                     Phone
-                    <input type="tel" name="reservation[${id}][${indexes[id]}].phone" required/>
+                    <input type="tel" name="reservation[${id}][${indexes[id]}].phone" required class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </label>
-            </div>
-            <div>
-        </div>`;
+            </div>`;
         container.appendChild(newInput);
 
         indexes[id]++;
     }
 </script>
 
-<form action="/user/reserve" name="reserveItinerary" method="POST">
-    <ul style="display: grid; gap: 3rem">
-        {{#instances}}
-            <li>
-                {{#flight}}
-                    {{departure}} : {{departureDateTime}}
-                    ⬇️
-                    {{arrival}} : {{arrivalDateTime}}
-                {{/flight}}
-                <div id="inputs-container-{{id}}">
-                </div>
-                <button type="button" onclick="addInput({{id}})">Add passenger</button>
-            </li>
-        {{/instances}}
-    </ul>
-    <button type="submit">Reserve</button>
-</form>
+<div class="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+         aria-hidden="true">
+        <defs>
+            <pattern id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527" width="200" height="200" x="50%" y="-64"
+                     patternUnits="userSpaceOnUse">
+                <path d="M100 200V.5M.5 .5H200" fill="none"/>
+            </pattern>
+        </defs>
+        <svg x="50%" y="-64" class="overflow-visible fill-gray-50">
+            <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M299.5 800h201v201h-201Z"
+                  stroke-width="0"/>
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"/>
+    </svg>
+    <div class="mx-auto max-w-xl lg:max-w-4xl">
+        <h2 class="text-4xl font-bold tracking-tight text-gray-900">
+            Let’s reserve a flight for you!
+        </h2>
+        <p class="mt-2 text-lg leading-8 text-gray-600">
+            By Artur Kozubov (@justAnArthur)
+        </p>
+        <div class="mt-16">
+            <form action="/reserve" name="reserveItinerary" method="POST" class="space-y-9">
+                {{#instances}}
+                    <div class="flex justify-between gap-9">
+                        <div class="w-72 rounded-2xl bg-indigo-500 text-gray-100 divide-y divide-gray-100 divide-dashed h-fit">
+                            {{#flight}}
+                                <div class="p-4 flex justify-between items-center">
+                                    <span class="text-3xl font-bold tracking-tight">{{departure.name}}</span>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+                                    </svg>
+
+                                    <span class="text-3xl font-bold tracking-tight">{{arrival.name}}</span>
+                                </div>
+                            {{/flight}}
+
+                            {{#flight}}
+                                <div class="relative p-4 flex justify-between">
+                                    <span class="absolute -top-2 -left-2 w-4 h-4 rounded-full bg-white"></span>
+                                    <span class="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-white"></span>
+
+                                    <h5>{{departureDateTime}}</h5>
+
+                                    <h5>{{arrivalDateTime}}</h5>
+                                </div>
+                            {{/flight}}
+                        </div>
+
+                        <div class="flex-1 space-y-4">
+                            <div id="inputs-container-{{id}}" class="divide-y divide-gray-100 space-y-6">
+
+                            </div>
+                            <button type="button" onclick="addInput({{id}})"
+                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Add passenger
+                            </button>
+                        </div>
+                    </div>
+                {{/instances}}
+                <button type="submit"
+                        class="w-72	ml-auto inline-flex justify-center text-center items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Reserve
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
 
-</body>
-</html>
+{{> footer}}

@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="person_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Person {
 
     @Id

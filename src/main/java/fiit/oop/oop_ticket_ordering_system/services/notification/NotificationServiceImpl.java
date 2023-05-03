@@ -41,6 +41,6 @@ public class NotificationServiceImpl {
         for (Enumeration<NotificationListener> e = listeners.elements(); e.hasMoreElements(); )
             (e.nextElement()).handleSend(person, type);
 
-        notificationRepository.save(notification);
+//        notificationRepository.save(notification);
     }
 }
