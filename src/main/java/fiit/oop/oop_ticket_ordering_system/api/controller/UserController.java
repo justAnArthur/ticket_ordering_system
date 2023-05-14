@@ -6,7 +6,6 @@ import fiit.oop.oop_ticket_ordering_system.api.res.FindItineraryResponse;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.FlightInstance;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.*;
 import fiit.oop.oop_ticket_ordering_system.services.flight.FlightService;
-import fiit.oop.oop_ticket_ordering_system.services.mail.EmailServiceImpl;
 import fiit.oop.oop_ticket_ordering_system.utils.DatesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,6 @@ public class UserController {
     PassengerRepository passengerRepository;
 
     FlightService flightService;
-    EmailServiceImpl emailServiceImpl;
     DatesUtils dates;
 
     @Autowired
@@ -43,7 +41,6 @@ public class UserController {
             PassengerRepository passengerRepository,
 
             FlightService flightService,
-            EmailServiceImpl emailServiceImpl,
             DatesUtils dates
     ) {
         this.airportRepository = airportRepository;
@@ -53,7 +50,6 @@ public class UserController {
         this.itineraryRepository = itineraryRepository;
         this.passengerRepository = passengerRepository;
         this.flightService = flightService;
-        this.emailServiceImpl = emailServiceImpl;
         this.dates = dates;
     }
 
@@ -63,13 +59,18 @@ public class UserController {
         model.addAttribute("request", new FindItineraryRequest());
         model.addAttribute("availableAirports", airportRepository.findAll());
 
+        model.addAttribute("response", new FindItineraryResponse(
+                flightInstanceRepository.findAllScheduled().stream()
+                        .map(List::of)
+                        .toList()
+        ));
+
         return "user/index";
     }
 
 
     @PostMapping
     public String find(Model model, @ModelAttribute("request") FindItineraryRequest request) {
-
         model.addAttribute("request", request);
         model.addAttribute("availableAirports", airportRepository.findAll());
 
@@ -112,12 +113,12 @@ public class UserController {
 
         return "user/reserve/thanks";
     }
-
+/*
     @GetMapping(value = "/test")
     public String test(Model model) throws Exception {
 
         emailServiceImpl.sendSimpleMessage("xkozubov@stuba.sk", "Hello", "hello");
 
         return "user/reserve/thanks";
-    }
+    }*/
 }

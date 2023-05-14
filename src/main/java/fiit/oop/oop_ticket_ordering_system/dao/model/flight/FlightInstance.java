@@ -12,6 +12,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Each flight can have multiple occurrences; each occurrence will be considered a flight instance in our system.
+ * For example, if a British Airways flight from London to Tokyo (flight number: BA212) occurs twice a week, each
+ * of these occurrences will be considered a separate flight instance in our system.
+ */
 @Data
 @Entity
 @Table(name = "flight_instance")
@@ -19,7 +24,7 @@ import java.util.List;
 public class FlightInstance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false, updatable = false)
@@ -42,11 +47,17 @@ public class FlightInstance {
     @ManyToMany
     private List<FlightSeat> flightSeats;
 
+    /**
+     * @return departure date and time
+     */
     @JsonProperty("departureDateTime")
     public LocalDateTime getDepartureDateTime() {
         return this.getDate().atTime(this.getFlight().getSchedule().getDepartureTime());
     }
 
+    /**
+     * @return arrival date and time
+     */
     @JsonProperty("arrivalDateTime")
     public LocalDateTime getArrivalDateTime() {
         return this.getDate().atTime(this.getFlight().getSchedule().getArrivalTime());

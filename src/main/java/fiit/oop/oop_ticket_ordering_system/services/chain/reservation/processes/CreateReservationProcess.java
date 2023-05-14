@@ -1,26 +1,30 @@
-package fiit.oop.oop_ticket_ordering_system.chain.reservation.processes;
+package fiit.oop.oop_ticket_ordering_system.services.chain.reservation.processes;
 
 import fiit.oop.oop_ticket_ordering_system.api.req.ReserveItineraryRequest;
-import fiit.oop.oop_ticket_ordering_system.chain.AbstractProcessElement;
 import fiit.oop.oop_ticket_ordering_system.dao.model.account.Passenger;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.FlightInstance;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.FlightReservation;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.Itinerary;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.ReservationStatus;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.FlightInstanceRepository;
+import fiit.oop.oop_ticket_ordering_system.dao.repositories.FlightReservationRepository;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.ItineraryRepository;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.PassengerRepository;
-import lombok.SneakyThrows;
+import fiit.oop.oop_ticket_ordering_system.services.chain.AbstractProcessElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Process for creating reservation from request and saving it to database.
+ */
 @Component
 public class CreateReservationProcess extends AbstractProcessElement<ReserveItineraryRequest, Itinerary> {
 
     private final FlightInstanceRepository flightInstanceRepository;
+    private final FlightReservationRepository flightReservationRepository;
     private final PassengerRepository passengerRepository;
     private final ItineraryRepository itineraryRepository;
 
@@ -29,19 +33,26 @@ public class CreateReservationProcess extends AbstractProcessElement<ReserveItin
     @Autowired
     CreateReservationProcess(
             FlightInstanceRepository flightInstanceRepository,
-            PassengerRepository passengerRepository,
+            FlightReservationRepository flightReservationRepository, PassengerRepository passengerRepository,
             ItineraryRepository itineraryRepository,
 
             SettingSeatMapProcess settingSeatMapProcess
     ) {
         this.flightInstanceRepository = flightInstanceRepository;
+        this.flightReservationRepository = flightReservationRepository;
         this.passengerRepository = passengerRepository;
         this.itineraryRepository = itineraryRepository;
 
         this.settingSeatMapProcess = settingSeatMapProcess;
     }
 
-    @SneakyThrows
+    /**
+     * Method for creating reservation from request and saving it to database.
+     *
+     * @param request   request with reservation data
+     * @param itinerary itinerary to which reservation will be added
+     * @return itinerary with added required reservation data
+     */
     @Override
     public Itinerary handler(ReserveItineraryRequest request, Itinerary itinerary) {
 
@@ -70,7 +81,10 @@ public class CreateReservationProcess extends AbstractProcessElement<ReserveItin
         itinerary.setStartingAirport(instances.get(0).getFlight().getDeparture());
         itinerary.setFinalAirport(instances.get(instances.size() - 1).getFlight().getArrival());
 
-//        itineraryRepository.save(itinerary);
+        Collection<FlightReservation> reservations = flightReservationRepository.saveAll(itinerary.getReservations());
+
+        itinerary.setReservations(new LinkedList<>(reservations));
+        itineraryRepository.save(itinerary);
 
         return this.callNext(request, itinerary);
     }

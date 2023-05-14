@@ -4,11 +4,13 @@ import fiit.oop.oop_ticket_ordering_system.dao.model.Address;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
+/**
+ *
+ */
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="person_type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "person_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Person {
 
     @Id

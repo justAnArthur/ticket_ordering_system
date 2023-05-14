@@ -1,77 +1,85 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>admin/flight/index</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+{{> header}}
 
-<h1>{{#add}}Create new Flight:{{/add}} {{^add}}Edit Flight:{{/add}}</h1>
-
+<div>
+    <h1 class="text-base font-semibold leading-6 text-gray-900">
+        {{#add}}Create new Flight{{/add}} {{^add}}Edit Flight{{/add}}
+    </h1>
+    <p class="mt-1 text-sm text-gray-700">
+        Here you can {{#add}}add{{/add}} {{^add}}edit{{/add}} a flight.
+    </p>
+</div>
 {{#flight}}
-    <form action="/admin{{#add}}/flight/add{{/add}}{{^add}}/flight/{{id}}/edit{{/add}}" name="flight" method="POST">
-        <table>
-            <tr>
-                <td>flightNumber</td>
-                <td>:</td>
-                <td><input type="text" name="flightNumber" value="{{#flightNumber}}{{flightNumber}}{{/flightNumber}}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Departure</td>
-                <td>:</td>
-                <td>
-                    <select name="departure">
-                        {{#airports}}
-                            <option value="{{id}}">{{name}}</option>
-                        {{/airports}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Arrival</td>
-                <td>:</td>
-                <td>
-                    <select name="arrival">
-                        {{#airports}}
-                            <option value="{{id}}">{{name}}</option>
-                        {{/airports}}
-                    </select>
-                </td>
-            </tr
-            {{#schedule}}
-                <tr>
-                    <td>Day of week</td>
-                    <td>:</td>
-                    <td>
-                        <select name="schedule.dayOfWeek">
-                            {{#availableDaysOfWeek}}
-                                <option  value="{{.}}">{{.}}</option>
-                            {{/availableDaysOfWeek}}
+    <div class="mt-8 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <form action="/admin{{#add}}/flight/add{{/add}}{{^add}}/flight/{{id}}/edit{{/add}}" name="flight"
+                      method="POST"
+                      class="overflow-hidden shadow p-6 grid gap-4 ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <label class="block text-sm font-medium leading-6 text-gray-900">
+                        Flight number
+                        <input type="text" name="flightNumber"
+                               value="{{#flightNumber}}{{flightNumber}}{{/flightNumber}}" required
+                               class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="008">
+                    </label>
+                    <label class="block text-sm font-medium leading-6 text-gray-900">
+                        Departure
+                        <select name="departure"
+                                required
+                                class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{#airports}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/airports}}
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Departure time</td>
-                    <td>:</td>
-                    <td><input type="time" name="schedule.departureTime"
-                               value="{{#departureTime}}{{departureTime}}{{/departureTime}}"/></td>
-                </tr>
-                <tr>
-                    <td>Arrival time</td>
-                    <td>:</td>
-                    <td><input type="time" name="schedule.arrivalTime"
-                               value="{{#arrivalTime}}{{arrivalTime}}{{/arrivalTime}}"/></td>
-                </tr>
-            {{/schedule}}>
-        </table>
-        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
-    </form>
-{{/flight}}
+                    </label>
+                    <label class="block text-sm font-medium leading-6 text-gray-900">
+                        Arrival
+                        <select name="arrival"
+                                required
+                                class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            {{#airports}}
+                                <option value="{{id}}">{{name}}</option>
+                            {{/airports}}
+                        </select>
+                    </label>
+                    {{#schedule}}
+                        <label class="block text-sm font-medium leading-6 text-gray-900">
+                            Day of week
+                            <select name="schedule.dayOfWeek"
+                                    required
+                                    class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {{#availableDaysOfWeek}}
+                                    <option value="{{.}}">{{.}}</option>
+                                {{/availableDaysOfWeek}}
+                            </select>
+                        </label>
+                        <label class="block text-sm font-medium leading-6 text-gray-900">
+                            Departure time
+                            <input type="time" name="schedule.departureTime"
+                                   required value="{{#departureTime}}{{departureTime}}{{/departureTime}}"
+                                   class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                        <label class="block text-sm font-medium leading-6 text-gray-900">
+                            Arrival time
+                            <input type="time" name="schedule.arrivalTime"
+                                   required value="{{#arrivalTime}}{{arrivalTime}}{{/arrivalTime}}"
+                                   class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                    {{/schedule}}
 
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <a href="/admin/flight" class="text-sm font-semibold leading-6 text-gray-900">
+                            Cancel
+                        </a>
+                        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"
+                               class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/flight}}
 
 <div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
 
-</body>
-</html>
+{{> footer}}

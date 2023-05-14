@@ -6,6 +6,9 @@ import lombok.NonNull;
 
 import java.util.List;
 
+/**
+ * The main entity of the system. Each flight will have a flight number, departure and arrival airport, assigned aircraft, etc.
+ */
 @Data
 @Entity
 @Table(name = "flight")
@@ -24,7 +27,7 @@ public class Flight {
     @ManyToOne(cascade = {CascadeType.ALL})
     private Airport arrival;
 
-    @OneToMany
+    @OneToMany(mappedBy = "flight", cascade = {CascadeType.ALL})
     private List<FlightInstance> instances;
 
     @NonNull
@@ -34,6 +37,12 @@ public class Flight {
 
     }
 
+    /**
+     * @param flightNumber flight number
+     * @param departure    departure airport
+     * @param arrival      arrival airport
+     * @param schedule     schedule of the flight
+     */
     public Flight(
             @NonNull String flightNumber,
             @NonNull Airport departure,

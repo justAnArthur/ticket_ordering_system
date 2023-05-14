@@ -3,6 +3,9 @@ package fiit.oop.oop_ticket_ordering_system.dao.model.airline;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * Seat class represents seat in database.
+ */
 @Data
 @Entity
 @Table(name = "seat")

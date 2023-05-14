@@ -6,6 +6,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Admin class represents admin account in database.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity

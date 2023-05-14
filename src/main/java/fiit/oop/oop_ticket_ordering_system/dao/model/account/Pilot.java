@@ -1,12 +1,14 @@
 package fiit.oop.oop_ticket_ordering_system.dao.model.account;
 
-import fiit.oop.oop_ticket_ordering_system.dao.model.flight.Flight;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
+/**
+ *
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity

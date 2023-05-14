@@ -10,7 +10,6 @@ import java.util.Collection;
 
 @Repository
 public interface FlightInstanceRepository extends CrudRepository<FlightInstance, Long>, JpaRepository<FlightInstance, Long> {
-
     @Query("select i from FlightInstance i where i.status = 1")
     Collection<FlightInstance> findAllScheduled();
 }
