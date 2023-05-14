@@ -1,18 +1,21 @@
-package fiit.oop.oop_ticket_ordering_system.chain.reservation;
+package fiit.oop.oop_ticket_ordering_system.services.chain.reservation;
 
 import fiit.oop.oop_ticket_ordering_system.api.req.ReserveItineraryRequest;
-import fiit.oop.oop_ticket_ordering_system.chain.AbstractProcessElement;
-import fiit.oop.oop_ticket_ordering_system.chain.ProcessChainService;
-import fiit.oop.oop_ticket_ordering_system.chain.reservation.processes.CreateReservationProcess;
-import fiit.oop.oop_ticket_ordering_system.chain.reservation.processes.PaymentReservationProcess;
-import fiit.oop.oop_ticket_ordering_system.chain.reservation.processes.NotificationReservationProcess;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.Itinerary;
+import fiit.oop.oop_ticket_ordering_system.services.chain.AbstractProcessElement;
+import fiit.oop.oop_ticket_ordering_system.services.chain.ProcessChainService;
+import fiit.oop.oop_ticket_ordering_system.services.chain.reservation.processes.CreateReservationProcess;
+import fiit.oop.oop_ticket_ordering_system.services.chain.reservation.processes.NotificationReservationProcess;
+import fiit.oop.oop_ticket_ordering_system.services.chain.reservation.processes.PaymentReservationProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A main chain for handling reservation that use a Chain Design Pattern. It is composed of multiple processes.
+ */
 @Service
 public class ReservationChainServiceImpl implements ProcessChainService<ReserveItineraryRequest, Itinerary> {
 
@@ -35,7 +38,6 @@ public class ReservationChainServiceImpl implements ProcessChainService<ReserveI
 
     @Override
     public Itinerary evalute(ReserveItineraryRequest request, Itinerary object) {
-
         return chain
                 .stream()
                 .findFirst()

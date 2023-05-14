@@ -1,34 +1,48 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>admin/airport/index</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+{{> header}}
 
-<h1>{{#add}}Create new Airline:{{/add}} {{^add}}Edit Airline:{{/add}}</h1>
-
+<div>
+    <h1 class="text-base font-semibold leading-6 text-gray-900">
+        {{#add}}Create new Airline{{/add}} {{^add}}Edit Airline{{/add}}
+    </h1>
+    <p class="mt-1 text-sm text-gray-700">
+        Here you can {{#add}}add{{/add}} {{^add}}edit{{/add}} a airline.
+    </p>
+</div>
 {{#airline}}
-    <form action="/admin{{#add}}/airline/add{{/add}}{{^add}}/airline/{{id}}/edit{{/add}}" name="airline" method="POST">
-        <table border="0">
-            <tr>
-                <td>Name</td>
-                <td>:</td>
-                <td><input type="text" name="name" value="{{#name}}{{name}}{{/name}}"/></td>
-            </tr>
-            <tr>
-                <td>Code</td>
-                <td>:</td>
-                <td><input type="text" name="code" value="{{#code}}{{code}}{{/code}}"/></td>
-            </tr>
-        </table>
-        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
-    </form>
-{{/airline}}
+    <div class="mt-8 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <form action="/admin{{#add}}/airline/add{{/add}}{{^add}}/airline/{{id}}/edit{{/add}}" name="airline"
+                      method="POST"
+                      class="overflow-hidden shadow p-6 grid gap-4 ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                    <label class="block text-sm font-medium leading-6 text-gray-900">
+                        Name
+                        <input type="text" name="name"
+                               value="{{#name}}{{name}}{{/name}}" required
+                               class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="008">
+                    </label>
+                    <label class="block text-sm font-medium leading-6 text-gray-900">
+                        Code
+                        <input type="text" name="code"
+                               value="{{#code}}{{code}}{{/code}}" required
+                               class="mt-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="008">
+                    </label>
 
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <a href="/admin/airline" class="text-sm font-semibold leading-6 text-gray-900">
+                            Cancel
+                        </a>
+                        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"
+                               class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/airline}}
 
 <div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
 
-</body>
-</html>
+{{> footer}}

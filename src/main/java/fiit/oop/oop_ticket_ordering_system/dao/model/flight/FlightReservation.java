@@ -5,9 +5,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+/**
+ * A reservation is made against a flight instance and has attributes like a unique reservation number,
+ * list of passengers and their assigned seats, reservation status, etc.
+ */
 @Data
 @Entity
 @Table(name = "reservation")
@@ -20,11 +24,18 @@ public class FlightReservation {
     @ManyToOne
     private FlightInstance flight;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Map<Passenger, FlightSeat> seatMap;
 
     private ReservationStatus status;
 
+    public Set<Map.Entry<Passenger, FlightSeat>> getSeatEntrySet() {
+        return seatMap.entrySet();
+    }
+
+    /**
+     * @return all unique passengers in a reservation
+     */
     public Collection<Passenger> getPassengers() {
         return seatMap.keySet();
     }

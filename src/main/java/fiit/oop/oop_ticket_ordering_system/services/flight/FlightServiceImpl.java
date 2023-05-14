@@ -1,12 +1,13 @@
 package fiit.oop.oop_ticket_ordering_system.services.flight;
 
+import fiit.oop.oop_ticket_ordering_system.api.exception.TOSException;
 import fiit.oop.oop_ticket_ordering_system.api.req.ReserveItineraryRequest;
-import fiit.oop.oop_ticket_ordering_system.chain.reservation.ReservationChainServiceImpl;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.Airport;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.FlightInstance;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.Itinerary;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.AircraftRepository;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.FlightInstanceRepository;
+import fiit.oop.oop_ticket_ordering_system.services.chain.reservation.ReservationChainServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-    private AircraftRepository aircraftRepository;
     private final FlightInstanceRepository flightInstanceRepository;
-
     private final ReservationChainServiceImpl reservationChainServiceImpl;
+    private final AircraftRepository aircraftRepository;
 
     @Autowired
     public FlightServiceImpl(
@@ -96,7 +96,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             reservationChainServiceImpl.evalute(request, new Itinerary());
             return true;
-        } catch (Exception ex) {
+        } catch (TOSException ex) {
             System.out.println(ex.getMessage());
             return false;
         }

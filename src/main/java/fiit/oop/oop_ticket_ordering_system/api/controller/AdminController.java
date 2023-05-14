@@ -6,9 +6,9 @@ import fiit.oop.oop_ticket_ordering_system.dao.model.airline.PriceList;
 import fiit.oop.oop_ticket_ordering_system.dao.model.airline.SeatSort;
 import fiit.oop.oop_ticket_ordering_system.dao.model.flight.*;
 import fiit.oop.oop_ticket_ordering_system.dao.repositories.*;
-import fiit.oop.oop_ticket_ordering_system.utils.DatesUtils;
 import fiit.oop.oop_ticket_ordering_system.services.flight.AircraftService;
 import fiit.oop.oop_ticket_ordering_system.services.flight.FlightService;
+import fiit.oop.oop_ticket_ordering_system.utils.DatesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +29,7 @@ public class AdminController {
     AircraftRepository aircraftRepository;
     FlightRepository flightRepository;
     FlightInstanceRepository flightInstanceRepository;
+    ItineraryRepository itineraryRepository;
 
     FlightService flightService;
     AircraftService aircraftService;
@@ -45,7 +46,8 @@ public class AdminController {
             FlightRepository flightRepository,
             FlightInstanceRepository flightInstanceRepository,
             AirlineRepository airlineRepository,
-            AircraftRepository aircraftRepository
+            AircraftRepository aircraftRepository,
+            ItineraryRepository itineraryRepository
     ) {
         this.flightService = flightService;
         this.aircraftService = aircraftService;
@@ -54,6 +56,7 @@ public class AdminController {
         this.flightInstanceRepository = flightInstanceRepository;
         this.airlineRepository = airlineRepository;
         this.aircraftRepository = aircraftRepository;
+        this.itineraryRepository = itineraryRepository;
         this.dates = dates;
     }
 
@@ -281,6 +284,7 @@ public class AdminController {
         try {
             Flight flight = flightRepository.findById(id).orElseThrow();
 
+            instance.setId(null);
             instance.setFlight(flight);
 
             FlightInstance saved = flightInstanceRepository.save(instance);
@@ -524,4 +528,29 @@ public class AdminController {
             return "admin/airline/aircraft/add";
         }
     }
+
+    /*------------------------------*/
+
+
+    @GetMapping("/itinerary")
+    public String showItineraries(Model model) {
+
+        model.addAttribute("itineraries", itineraryRepository.findAll());
+
+        return "admin/itinerary/index";
+    }
+
+
+    @GetMapping("/itinerary/{id}/details")
+    public String showItineraryDetails(Model model, @PathVariable long id) {
+
+        try {
+            model.addAttribute("itinerary", itineraryRepository.findById(id).orElseThrow());
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+
+        return "admin/itinerary/details";
+    }
+
 }

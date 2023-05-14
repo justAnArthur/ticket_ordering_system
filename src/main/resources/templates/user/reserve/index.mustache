@@ -5,7 +5,7 @@
 
     function addInput(id) {
         if (indexes[id] == null)
-            indexes[id] = 0;
+            indexes[id] = 1;
 
         const container = document.getElementById('inputs-container-' + id);
         const newInput = document.createElement('div');
@@ -88,7 +88,26 @@
 
                         <div class="flex-1 space-y-4">
                             <div id="inputs-container-{{id}}" class="divide-y divide-gray-100 space-y-6">
-
+                                <div class="space-y-2">
+                                    <h4 class="text-base font-semibold text-gray-800">
+                                        Passenger 1
+                                    </h4>
+                                    <label class="block text-sm font-semibold leading-6 text-gray-900">
+                                        Name
+                                        <input type="text" name="reservation[{{id}}][0].name" required
+                                               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                                    </label>
+                                    <label class="block text-sm font-semibold leading-6 text-gray-900">
+                                        Email
+                                        <input type="email" name="reservation[{{id}}][0].email" required
+                                               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                                    </label>
+                                    <label class="block text-sm font-semibold leading-6 text-gray-900">
+                                        Phone
+                                        <input type="tel" name="reservation[{{id}}][0].phone" required
+                                               class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                                    </label>
+                                </div>
                             </div>
                             <button type="button" onclick="addInput({{id}})"
                                     class="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">

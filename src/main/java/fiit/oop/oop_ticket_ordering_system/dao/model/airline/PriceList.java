@@ -6,6 +6,9 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * PriceList for seats fares in aircraft.
+ */
 @Data
 @Entity
 @Table(name = "price_list")

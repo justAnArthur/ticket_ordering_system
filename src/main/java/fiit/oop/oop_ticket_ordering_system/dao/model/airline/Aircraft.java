@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Airlines own or hire aircraft to carry out their flights.
+ * Each aircraft has attributes like name, model, manufacturing year, etc.
+ */
 @Data
 @Entity
 @Table(name = "aircraft")

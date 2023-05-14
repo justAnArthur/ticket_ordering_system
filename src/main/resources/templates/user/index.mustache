@@ -75,10 +75,10 @@
                     </p>
                 </form>
             {{/request}}
-            <div class="lg:mt-6 lg:w-80 lg:flex-none">
+            <div class="lg:mt-6 lg:flex-none space-y-9">
                 {{#response}}
                     {{#routes}}
-                        <ul class="space-y-9">
+                        <ul class="space-y-4 bg-indigo-200 rounded-lg">
                             {{#route}}
                                 <li class="w-72	rounded-2xl bg-indigo-500 text-gray-100">
                                     <a href="/reserve?ids={{ids}}" class="divide-y divide-gray-100 divide-dashed">
@@ -86,8 +86,10 @@
                                         <div class="p-4 flex justify-between items-center">
                                             <span class="text-3xl font-bold tracking-tight">{{departure.name}}</span>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
                                             </svg>
 
                                             <span class="text-3xl font-bold tracking-tight">{{arrival.name}}</span>
@@ -99,9 +101,8 @@
                                             <span class="absolute -top-2 -left-2 w-4 h-4 rounded-full bg-white"></span>
                                             <span class="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-white"></span>
 
-                                            <h5>{{departureDateTime}}</h5>
-
-                                            <h5>{{arrivalDateTime}}</h5>
+                                            <time datetime="{{departureDateTime}}">{{departureDateTime}}</time>
+                                            <time datetime="{{arrivalDateTime}}">{{arrivalDateTime}}</time>
                                         </div>
                                     {{/flight}}
                                     </a>

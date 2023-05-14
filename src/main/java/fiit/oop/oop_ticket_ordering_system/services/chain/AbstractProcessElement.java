@@ -1,10 +1,15 @@
-package fiit.oop.oop_ticket_ordering_system.chain;
+package fiit.oop.oop_ticket_ordering_system.services.chain;
 
-import fiit.oop.oop_ticket_ordering_system.api.req.Request;
 import lombok.Setter;
 
 import java.util.function.BiFunction;
 
+/**
+ * Abstract class for process element.
+ *
+ * @param <R> handler request
+ * @param <T> object for changing
+ */
 @Setter
 public abstract class AbstractProcessElement<R, T> implements ProcessElement<R, T> {
 
