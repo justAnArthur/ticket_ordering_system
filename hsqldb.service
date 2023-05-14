@@ -1,0 +1,12 @@
+[Unit]
+Description=HSQLDB Server
+After=network.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/hsqldb.pid
+ExecStart=/opt/hsqldb-2.7.1/hsqldb start
+ExecStop=/opt/hsqldb-2.7.1/hsqldb stopcompact
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=oop_ticket_ordering_system
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/java -jar /artifact/oop_ticket_ordering_system-0.0.1-SNAPSHOT.jar
+
+[Install]
+WantedBy=multi-user.target
