@@ -32,9 +32,6 @@ public final class Itinerary {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlightReservation> reservations = new LinkedList<>();
 
-    //    @OneToOne
-//    private Payment payment;
-
     /**
      * @return all unique passengers in a reservation
      */
