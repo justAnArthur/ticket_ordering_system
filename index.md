@@ -5,8 +5,13 @@ java -cp ../lib/hsqldb.jar org.hsqldb.server.Server --database.0 file.test --dbn
 # todo
 
 - Working program
+<<<<<<< HEAD
     - [ ] Possibility to create an Itinerary
     - [ ] Notification about created
+=======
+    - [x] Possibility to create an Itinerary ✅ 2023-12-17
+    - [x] Notification about created ✅ 2023-12-17
+>>>>>>> 2410c8a (- files)
 
 
 
