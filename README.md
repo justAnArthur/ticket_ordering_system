@@ -1,6 +1,113 @@
+<a href="https://github.com/justAnArthur/ticket_ordering_system"><img src=".github/banner.svg" alt="Airline ticket ordering: Spring Boot web app that finds direct and one-stop flights, seats a whole group and emails every passenger." width="100%"></a>
+
+# Airline ticket ordering
+
+A Spring Boot web app for searching flights, booking seats for a group of passengers and mailing each of them a confirmation, with an admin side for airports, airlines and schedules. Built for Object-Oriented Programming (OOP) at FIIT STU in spring 2023.
+
+> Finished and archived. The assigned topic was path planning; the report narrows it to airline ticket ordering. Payment is a stub: `PaymentReservationProcess` passes straight through and is not part of the booking chain.
+
+![Search page: date and airports on the left, scheduled flights on the right](src/main/resources/static/templates.mainPage.png)
+
+## What it does
+
+- Search by date and two airports: lists direct flights and one-stop connections whose second leg leaves within 12 hours of the first landing
+- Book a route: a chain of responsibility creates one reservation per leg, gives every passenger a free seat from the aircraft's seat list (or fails if there are too few) and saves the itinerary
+- Notify: `NotificationServiceImpl` passes each passenger to its registered listeners, and `EmailNotificationListener` sends the confirmation through Spring Mail
+- Admin at `/admin`: add, edit and delete airports; add and edit airlines with their aircraft, flights and dated flight instances; browse itineraries
+- 17 JPA entities on HyperSQL, including a `Person` hierarchy (passenger, pilot, crew, admin) mapped with joined-table inheritance
+
+## How it works
+
+```mermaid
+flowchart TD
+  A[Search form: date, from, to] --> B[findRoutes: direct flights, or two legs where the second leaves within 12 h of landing]
+  B --> C[Pick a route and enter passengers for each leg]
+  C --> D[CreateReservationProcess: one reservation per leg, a free seat for every passenger, itinerary saved]
+  D -->|not enough seats| X[Unable to create reservation]
+  D --> E[NotificationReservationProcess]
+  E --> F[NotificationServiceImpl hands each passenger to its listeners]
+  F --> G[EmailNotificationListener sends the confirmation mail]
+```
+
+The main entities:
+
+```mermaid
+classDiagram
+  class Person {
+    <<abstract>>
+    email
+    name
+    phone
+  }
+  Person <|-- Passenger
+  Person <|-- Pilot
+  Person <|-- Crew
+  class Flight {
+    flightNumber
+    schedule
+  }
+  class FlightInstance {
+    date
+    gate
+    status
+  }
+  class FlightReservation {
+    seatMap
+    status
+  }
+  class Itinerary {
+    creationDate
+  }
+  Flight --> Airport : departure, arrival
+  Flight "1" --> "*" FlightInstance : instances
+  FlightInstance --> Aircraft
+  FlightInstance --> "*" Pilot : pilots
+  FlightInstance --> "*" Crew : crew
+  FlightReservation --> FlightInstance : flight
+  FlightReservation --> "*" Passenger : seat map
+  Itinerary "1" --> "*" FlightReservation : reservations
+  Itinerary --> Airport : start, final
+```
+
+## Run
+
+The app connects to an HSQLDB server at `jdbc:hsqldb:hsql://localhost/test`; start one first (command adapted from `index.md`):
+
+```bash
+java -cp hsqldb-2.7.1.jar org.hsqldb.server.Server --database.0 file.test --dbname.0 test
+```
+
+Then build and start the app on http://localhost:8080 (admin at `/admin`):
+
+```bash
+./mvnw package -DskipTests
+java -jar target/oop_ticket_ordering_system-0.0.1-SNAPSHOT.jar
+```
+
+It targets Java 19. On JDK 21, build with `-Dlombok.version=1.18.34`: the Lombok that Spring Boot 3.0.4 pins does not compile there. Confirmation mails go out through Gmail SMTP (`spring.mail.*` in `application.properties`); set the password in `SPRING_MAIL_PASSWORD`.
+
+## Stack
+
+Java 19, Spring Boot 3.0.4 (Web, Data JPA, Mail, Mustache), HyperSQL 2.7.1, Lombok, Tailwind CSS from its CDN, Maven wrapper.
+
+## Documentation
+
+- [src/main/resources/index.pdf](src/main/resources/index.pdf): the project report, also kept in full below
+- [src/main/resources/static/diagram.jpg](src/main/resources/static/diagram.jpg): the full UML class diagram ([draw.io source](src/main/resources/static/diagram.drawio))
+- [src/main/resources/javadoc](src/main/resources/javadoc): generated JavaDoc
+- [hsqldb.service](hsqldb.service), [oop_ticket_ordering_system.service](oop_ticket_ordering_system.service): the systemd units it ran under on a server, with the jar from [artifact](artifact)
+
+## License
+
+[CC BY-NC-ND 4.0](LICENSE): share it with credit, but no changes and no commercial use. Don't hand it in as your own coursework.
+
+---
+
+## Report
+
 # Airline management system
 
-![templates.mainPage.png](static%2Ftemplates.mainPage.png)
+![templates.mainPage.png](src/main/resources/static/templates.mainPage.png)
 
 As part of the course, we needed to implement a software solution for:
 
@@ -163,7 +270,7 @@ regulates all airline operations.
 As the number of classes as well as the number of all attributes and methods is large, the UML-Diagram itself is huge,
 so here is part of it:
 
-![templates.diagram.png](static%2Ftemplates.diagram.png)
+![templates.diagram.png](src/main/resources/static/templates.diagram.png)
 
 > You can see the full version in the attached file.
 
@@ -192,7 +299,7 @@ Basic principles of OOP. In my project I've used:
 
 For example in my project I've used inheritance in the following class:
 
-![templates.inheritance.diagram.png](static%2Ftemplates.inheritance.diagram.png)
+![templates.inheritance.diagram.png](src/main/resources/static/templates.inheritance.diagram.png)
 
 ### Encapsulation
 
@@ -296,13 +403,13 @@ I've used the following design patterns:
 
 To handle creation reservation process I've used a chain of responsibility pattern:
 
-![templates.designPatterns.diagram.png](static%2Ftemplates.designPatterns.diagram.png)
+![templates.designPatterns.diagram.png](src/main/resources/static/templates.designPatterns.diagram.png)
 
 ### Observers
 
 I am using to handle notification for a users.
 
-![templates.designPatterns.diagram2.png](static%2Ftemplates.designPatterns.diagram2.png)
+![templates.designPatterns.diagram2.png](src/main/resources/static/templates.designPatterns.diagram2.png)
 
 ---
 
@@ -337,7 +444,7 @@ public class TOSException extends RuntimeException {
 }
 ```
 
-![templates.exception.diagram.png](static%2Ftemplates.exception.diagram.png)
+![templates.exception.diagram.png](src/main/resources/static/templates.exception.diagram.png)
 
 </div>
 
@@ -349,13 +456,13 @@ public class TOSException extends RuntimeException {
 
 <div style="border: 1px solid #ccc; border-radius: 10px">
 
-![gui.folderStructures.png](static%2Fgui.folderStructures.png)
+![gui.folderStructures.png](src/main/resources/static/gui.folderStructures.png)
 
 </div>
 
 <div style="grid-column: span 2 / span 2;">
 
-![templates.adminPage.png](static%2Ftemplates.adminPage.png)
+![templates.adminPage.png](src/main/resources/static/templates.adminPage.png)
 
 > All client and admin requests are handled by the same controllers, but the admin has more options.
 
