@@ -80,7 +80,7 @@ java -cp hsqldb-2.7.1.jar org.hsqldb.server.Server --database.0 file.test --dbna
 Then build and start the app on http://localhost:8080 (admin at `/admin`):
 
 ```bash
-./mvnw package -DskipTests
+sh mvnw package -DskipTests
 java -jar target/oop_ticket_ordering_system-0.0.1-SNAPSHOT.jar
 ```
 
